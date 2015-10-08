@@ -1,8 +1,10 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
+
 target 'EVSendLater_Example', :exclusive => true do
   pod "EVSendLater", :path => "../"
+  pod 'Alamofire'
 end
 
 target 'EVSendLater_Tests', :exclusive => true do

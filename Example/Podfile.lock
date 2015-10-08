@@ -1,7 +1,9 @@
 PODS:
+  - Alamofire (2.0.2)
   - EVSendLater (0.1.0)
 
 DEPENDENCIES:
+  - Alamofire
   - EVSendLater (from `../`)
 
 EXTERNAL SOURCES:
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  EVSendLater: 154a76cc41d0dedbd84c1fed2cc6686d88c033f2
+  Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
+  EVSendLater: c44a5d813d2761e1eb968f9ee2cd156014f8eb2e
 
 COCOAPODS: 0.38.2

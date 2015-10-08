@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4E8DBCBBCAFD7076C3550CEA"
+               BlueprintIdentifier = "A48140A1DE6CF7517791BABE"
                BuildableName = "EVSendLater.framework"
                BlueprintName = "EVSendLater"
                ReferencedContainer = "container:Pods.xcodeproj">

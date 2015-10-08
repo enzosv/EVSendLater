@@ -9,7 +9,24 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+When a POST request fails to send due to internet issues or other errors you may wish to handle, save its parameters using EVSendLater.sharedManager.saveForLater(url, params: params)
+
+This will save the parameters to an NSDictionary which you must persist using
+```swift
+EVSendLater.sharedManager.synchronizeSaves() //(similar to NSUserDefaults)
+```
+
+In order to retrieve this to reattempt sending, use
+```swift
+EVSendLater.sharedManager.getSavesForUrl(url, delete: true)
+```
+The delete parameter will assume that the POSTS will go through. Simply handle their errors again using EVSendLater.sharedManager.saveForLater(url, params: params)
+
+You can also go through all urls to send everything using
+```swift
+EVSendLater.sharedManager.getAllSaves()
+```
+Just use EVSendLater.sharedManager.getSavesForUrl(url, delete: true) for each url
 
 ## Installation
 

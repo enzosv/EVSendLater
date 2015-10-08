@@ -1,15 +1,15 @@
 {
   "name": "EVSendLater",
   "version": "0.1.0",
-  "summary": "A short description of EVSendLater.",
+  "summary": "Persist AFNetworking POST parameters to send them later",
   "description": "",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/EVSendLater",
+  "homepage": "https://github.com/enzosv/EVSendLater",
   "license": "MIT",
   "authors": {
     "Enzo Vergara": "vergara.enzo@gmail.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/EVSendLater.git",
+    "git": "https://github.com/enzosv/EVSendLater.git",
     "tag": "0.1.0"
   },
   "platforms": {

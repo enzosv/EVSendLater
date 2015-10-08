@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="EVSendLater_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,11 +16,105 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WOh-rN-MaU">
+                                <rect key="frame" x="20" y="57" width="560" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="String parameter:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zC6-cu-F9f">
+                                <rect key="frame" x="20" y="28" width="560" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mgu-Nq-IAb">
+                                <rect key="frame" x="0.0" y="171" width="600" height="429"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="hdm-PI-SJd" detailTextLabel="geV-M5-MsJ" style="IBUITableViewCellStyleValue2" id="KB2-VZ-a6K">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KB2-VZ-a6K" id="zhs-H0-t07">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hdm-PI-SJd">
+                                                    <rect key="frame" x="15" y="15" width="91" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="geV-M5-MsJ">
+                                                    <rect key="frame" x="112" y="15" width="33" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="bhq-a5-Wlc"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="awQ-Sb-uu2"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6K-MD-Yxg">
+                                <rect key="frame" x="20" y="95" width="560" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="AW4-Vk-RiU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NDo-vP-ckH">
+                                <rect key="frame" x="20" y="133" width="560" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Resend All"/>
+                                <connections>
+                                    <action selector="syncAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yWv-2i-Ca5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Mgu-Nq-IAb" secondAttribute="trailing" id="AIM-bg-Qfc"/>
+                            <constraint firstItem="WOh-rN-MaU" firstAttribute="top" secondItem="zC6-cu-F9f" secondAttribute="bottom" constant="8" id="Bfo-eW-6EB"/>
+                            <constraint firstItem="y6K-MD-Yxg" firstAttribute="top" secondItem="WOh-rN-MaU" secondAttribute="bottom" constant="8" id="EmN-l6-y22"/>
+                            <constraint firstItem="y6K-MD-Yxg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="Gb2-q3-OsQ"/>
+                            <constraint firstItem="zC6-cu-F9f" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="KB7-6u-dXy"/>
+                            <constraint firstAttribute="trailing" secondItem="zC6-cu-F9f" secondAttribute="trailing" constant="20" id="Kma-Yg-8L8"/>
+                            <constraint firstItem="WOh-rN-MaU" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="Lti-61-DaW"/>
+                            <constraint firstAttribute="trailing" secondItem="NDo-vP-ckH" secondAttribute="trailing" constant="20" id="N9I-JJ-meX"/>
+                            <constraint firstAttribute="trailing" secondItem="y6K-MD-Yxg" secondAttribute="trailing" constant="20" id="QLO-kg-orV"/>
+                            <constraint firstItem="NDo-vP-ckH" firstAttribute="top" secondItem="y6K-MD-Yxg" secondAttribute="bottom" constant="8" id="QY6-TZ-AXu"/>
+                            <constraint firstAttribute="trailing" secondItem="WOh-rN-MaU" secondAttribute="trailing" constant="20" id="SfW-50-w0Z"/>
+                            <constraint firstItem="NDo-vP-ckH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="a4V-Ep-3oT"/>
+                            <constraint firstItem="Mgu-Nq-IAb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="eyx-kK-Vf2"/>
+                            <constraint firstItem="zC6-cu-F9f" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="hkc-gy-rop"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Mgu-Nq-IAb" secondAttribute="bottom" id="mlA-k0-VIA"/>
+                            <constraint firstItem="Mgu-Nq-IAb" firstAttribute="top" secondItem="NDo-vP-ckH" secondAttribute="bottom" constant="8" id="xK0-W9-nXm"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="inputField" destination="WOh-rN-MaU" id="Edn-mU-2hn"/>
+                        <outlet property="table" destination="Mgu-Nq-IAb" id="cyk-rT-6HP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="325" y="399"/>
         </scene>
     </scenes>
 </document>
