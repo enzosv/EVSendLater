@@ -14,13 +14,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var inputField: UITextField!
-    var saves:NSArray!
+    var saves:NSDictionary!
     let formatter = NSDateFormatter()
     override func viewDidLoad() {
         super.viewDidLoad()
         formatter.dateFormat = "MMM d, h:mm a"
-        saves = EVSendLater.sharedManager.getSavesForUrl("http://httpbin.org/post", delete: false)
-        table.reloadData()
+        saves = EVSendLater.sharedManager.getAllSaves(false)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -33,7 +32,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         Alamofire.request(.POST, url, parameters: params).responseJSON { (request, response, result) -> Void in
             if result.isFailure{
                 EVSendLater.sharedManager.saveForLater(url, params: params)
-                self.saves  = EVSendLater.sharedManager.getSavesForUrl(url, delete:false)
+                self.saves  = EVSendLater.sharedManager.getAllSaves(false)
                 self.table.reloadData()
                 EVSendLater.sharedManager.synchronizeSaves()
             }
@@ -42,19 +41,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     @IBAction func syncAction(sender: UIButton) {
-        EVSendLater.sharedManager.synchronizeSaves()
-        let url = "http://httpbin.org/post"
-        if let params = EVSendLater.sharedManager.getSavesForUrl(url, delete:true){
-            for p in params{
-                sendNowOrLater(url, params: p, completion: { (success) -> Void in
-                    if success{
-                        self.saves  = EVSendLater.sharedManager.getSavesForUrl(url, delete:false)
-                        self.table.reloadData()
-                        EVSendLater.sharedManager.synchronizeSaves()
+        for (url, params) in EVSendLater.sharedManager.getAllSaves(true){
+            if let u = url as? String{
+                if let parameters = params as? [[String: AnyObject]]{
+                    for p in parameters{
+                        sendNowOrLater(u, params: p, completion: { (success) -> Void in
+                            if success{
+                                self.saves = EVSendLater.sharedManager.getAllSaves(false)
+                                self.table.reloadData()
+                            }
+                            EVSendLater.sharedManager.synchronizeSaves()
+                        })
                     }
-                })
+                }
             }
         }
+//        EVSendLater.sharedManager.synchronizeSaves()
+//        let url = "http://httpbin.org/post"
+//        if let params = EVSendLater.sharedManager.getSavesForUrl(url, delete:true){
+//            for p in params{
+//                sendNowOrLater(url, params: p, completion: { (success) -> Void in
+//                    if success{
+//                        self.saves  = EVSendLater.sharedManager.getSavesForUrl(url, delete:false)
+//                        self.table.reloadData()
+//                        EVSendLater.sharedManager.synchronizeSaves()
+//                    }
+//                })
+//            }
+//        }
     }
     
     @IBAction func sendAction(sender: UIButton) {
@@ -64,22 +78,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return saves.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if saves == nil{
             return 0
         }
-        return saves.count
+        if let key = saves.allKeys[section] as? String{
+            return saves.objectForKey(key)!.count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
-        if let save = saves[indexPath.row] as? NSDictionary{
-            cell.textLabel?.text = save.objectForKey("string") as! String!
-            cell.detailTextLabel?.text = formatter.stringFromDate(NSDate(timeIntervalSince1970: save.objectForKey("date")!.doubleValue))
+        if let key = saves.allKeys[indexPath.section] as? String{
+            if let save = saves.objectForKey(key)![indexPath.row] as? NSDictionary{
+                cell.textLabel?.text = save.objectForKey("string") as! String!
+                cell.detailTextLabel?.text = formatter.stringFromDate(NSDate(timeIntervalSince1970: save.objectForKey("date")!.doubleValue))
+            }
         }
+        
         return cell
         
     }

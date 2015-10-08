@@ -53,7 +53,7 @@ public class EVSendLater : NSObject {
     }
     
     public func getSavesForUrl(url:String, delete:Bool) -> [[String:AnyObject]]?{
-        if let s = saves.objectForKey(url) as? [[String:AnyObject]]{
+        if let s = saves.objectForKey(url)?.copy() as? [[String:AnyObject]]{
             if delete{
                 savesChanged = true
                 saves.removeObjectForKey(url)
@@ -63,7 +63,12 @@ public class EVSendLater : NSObject {
         return nil
     }
     
-    public func getAllSaves() -> NSDictionary{
-        return saves
+    public func getAllSaves(delete:Bool) -> NSDictionary{
+        let s = saves.copy()
+        if delete{
+            saves.removeAllObjects()
+            savesChanged = true
+        }
+        return s as! NSDictionary
     }
 }
