@@ -25,7 +25,7 @@ EVSendLater.sharedManager.synchronizeSaves()
 // (similar to NSUserDefaults)
 ```
 *Ideally, this should only be called before the app exits*
-
+*In order to automatically save every change, use `EVSendLater.sharedManager.saveImmediately = true`*
 #### Example
 ```swift
 Alamofire.request(.POST, url, parameters: params).responseJSON { (request, response, result) -> Void in

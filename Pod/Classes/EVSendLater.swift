@@ -12,6 +12,7 @@ public class EVSendLater : NSObject {
     private var savesChanged = false
     private var savesCreated = false
     private let path = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString).stringByAppendingPathComponent("EVSendLaters")
+    public var saveImmediately = false
     
     public class var sharedManager : EVSendLater {
         struct Static {
@@ -43,7 +44,11 @@ public class EVSendLater : NSObject {
         } else{
             saves.setObject(NSMutableArray(array: [params]), forKey: url)
         }
+        
         savesChanged = true
+        if saveImmediately{
+            synchronizeSaves()
+        }
     }
     
     public func synchronizeSaves(){
@@ -55,8 +60,12 @@ public class EVSendLater : NSObject {
     public func getSavesForUrl(url:String, delete:Bool) -> [[String:AnyObject]]?{
         if let s = saves.objectForKey(url)?.copy() as? [[String:AnyObject]]{
             if delete{
-                savesChanged = true
                 saves.removeObjectForKey(url)
+                savesChanged = true
+                if saveImmediately{
+                    synchronizeSaves()
+                }
+                
             }
             return s
         }
@@ -68,6 +77,9 @@ public class EVSendLater : NSObject {
         if delete{
             saves.removeAllObjects()
             savesChanged = true
+            if saveImmediately{
+                synchronizeSaves()
+            }
         }
         return s as! NSDictionary
     }
