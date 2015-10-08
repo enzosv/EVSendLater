@@ -1,0 +1,25 @@
+{
+  "name": "EVSendLater",
+  "version": "0.1.0",
+  "summary": "A short description of EVSendLater.",
+  "description": "",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/EVSendLater",
+  "license": "MIT",
+  "authors": {
+    "Enzo Vergara": "vergara.enzo@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/EVSendLater.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "EVSendLater": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}

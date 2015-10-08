@@ -1,0 +1,14 @@
+PODS:
+  - EVSendLater (0.1.0)
+
+DEPENDENCIES:
+  - EVSendLater (from `../`)
+
+EXTERNAL SOURCES:
+  EVSendLater:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  EVSendLater: 154a76cc41d0dedbd84c1fed2cc6686d88c033f2
+
+COCOAPODS: 0.38.2
