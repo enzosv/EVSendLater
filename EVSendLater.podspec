@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "EVSendLater"
-  s.version          = "0.1.0"
-  s.summary          = "Persist POST request parameters to send them later"
+  s.version          = "0.2.0"
+  s.summary          = "Easy offline HTTP request handling with Swift"
   s.homepage         = "https://github.com/enzosv/EVSendLater"
   s.license          = 'MIT'
   s.author           = { "Enzo Vergara" => "vergara.enzo@gmail.com" }
