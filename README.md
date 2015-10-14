@@ -40,19 +40,24 @@ Alamofire.request(.POST, url, parameters: params).responseJSON { (request, respo
 ### Retrieving
 In order to retrieve this to reattempt sending, use
 ```swift
-EVSendLater.sharedManager.getSavesForUrl(url, delete: true)
+EVSendLater.sharedManager.getSavesForUrl(url)
 ```
-The delete parameter will assume that the POSTS will go through. Simply handle their errors again using `EVSendLater.sharedManager.saveForLater(url, params: params)`
+In the case that these requests fail again, there's no need to resave them but you will have to remove them if they succeed using 
+``` swift
+EVSendLater.sharedManager.removeFromSaves(url, params: parameters)
+```
 
 #### Example for single URL
 ```swift
-if let params = EVSendLater.sharedManager.getSavesForUrl(url, delete:true){
+if let params = EVSendLater.sharedManager.getSavesForUrl(url){
     for p in params{
-        Alamofire.request(.POST, u, parameters: p).responseJSON { (request, response, result) -> Void in
-            if result.isFailure{
-                EVSendLater.sharedManager.saveForLater(url, params: p)
+        Alamofire.request(.POST, url, parameters: p).responseJSON { (request, response, result) -> Void in
+            if result.isSuccess{
+            	//handle success
+            	EVSendLater.sharedManager.removeFromSaves(url, params: p)
+                EVSendLater.sharedManager.synchronizeSaves()
             }
-            EVSendLater.sharedManager.synchronizeSaves()
+            
         }
     }
 }
@@ -60,21 +65,22 @@ if let params = EVSendLater.sharedManager.getSavesForUrl(url, delete:true){
 
 You can also go through all urls to send everything using
 ```swift
-EVSendLater.sharedManager.getAllSaves(true)
+EVSendLater.sharedManager.getAllSaves()
 ```
-The delete parameter will assume that the POSTS will go through. Simply handle their errors again using `EVSendLater.sharedManager.saveForLater(url, params: params)`
 
 #### Example for all URLs
 ```swift
-for (url, parameters) in EVSendLater.sharedManager.getAllSaves(true){
+for (url, parameters) in EVSendLater.sharedManager.getAllSaves(){
     if let u = url as? String{
         if let params = parameters as? [[String: AnyObject]]{
             for p in params{
                 Alamofire.request(.POST, u, parameters: p).responseJSON { (request, response, result) -> Void in
-                    if result.isFailure{
-                        EVSendLater.sharedManager.saveForLater(u, params: p)
+                    if result.isSuccess{
+                    	//handle success
+                        EVSendLater.sharedManager.removeFromSaves(u, params: p)
+                		EVSendLater.sharedManager.synchronizeSaves()
+
                     }
-                    EVSendLater.sharedManager.synchronizeSaves()
                 }
             }
         }

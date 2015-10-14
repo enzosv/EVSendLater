@@ -45,10 +45,7 @@ public class EVSendLater : NSObject {
             saves.setObject(NSMutableArray(array: [params]), forKey: url)
         }
         
-        savesChanged = true
-        if saveImmediately{
-            synchronizeSaves()
-        }
+        setSavesChanged()
     }
     
     public func synchronizeSaves(){
@@ -58,29 +55,24 @@ public class EVSendLater : NSObject {
     }
     
     public func getSavesForUrl(url:String, delete:Bool) -> [[String:AnyObject]]?{
-        if let s = saves.objectForKey(url)?.copy() as? [[String:AnyObject]]{
-            if delete{
-                saves.removeObjectForKey(url)
-                savesChanged = true
-                if saveImmediately{
-                    synchronizeSaves()
-                }
-                
-            }
-            return s
-        }
-        return nil
+        return saves.objectForKey(url)?.copy() as? [[String:AnyObject]]
     }
     
-    public func getAllSaves(delete:Bool) -> NSDictionary{
-        let s = saves.copy()
-        if delete{
-            saves.removeAllObjects()
-            savesChanged = true
-            if saveImmediately{
-                synchronizeSaves()
-            }
+    public func getAllSaves() -> NSDictionary{
+        return saves
+    }
+    
+    public func removeFromSaves(url:String, params:[String:AnyObject]){
+        if let array = saves.objectForKey(url) as? NSMutableArray{
+            array.removeObject(params)
+            setSavesChanged()
         }
-        return s as! NSDictionary
+    }
+    
+    func setSavesChanged(){
+        savesChanged = true
+        if saveImmediately{
+            synchronizeSaves()
+        }
     }
 }

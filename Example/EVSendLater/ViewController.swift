@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         formatter.dateFormat = "MMM d, h:mm a"
-        saves = EVSendLater.sharedManager.getAllSaves(false)
+        saves = EVSendLater.sharedManager.getAllSaves()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -27,54 +27,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func sendNowOrLater(url:String, params:[String:AnyObject], completion:(success:Bool) -> Void){
-        Alamofire.request(.POST, url, parameters: params).responseJSON { (request, response, result) -> Void in
-            if result.isFailure{
-                EVSendLater.sharedManager.saveForLater(url, params: params)
-                self.saves  = EVSendLater.sharedManager.getAllSaves(false)
-                self.table.reloadData()
-                EVSendLater.sharedManager.synchronizeSaves()
-            }
-            completion(success: result.isSuccess)
-        }
-    }
 
     @IBAction func syncAction(sender: UIButton) {
-        for (url, params) in EVSendLater.sharedManager.getAllSaves(true){
+        for (url, parameters) in EVSendLater.sharedManager.getAllSaves(){
             if let u = url as? String{
-                if let parameters = params as? [[String: AnyObject]]{
-                    for p in parameters{
-                        sendNowOrLater(u, params: p, completion: { (success) -> Void in
-                            if success{
-                                self.saves = EVSendLater.sharedManager.getAllSaves(false)
-                                self.table.reloadData()
+                if let params = parameters as? [[String: AnyObject]]{
+                    for p in params{
+                        Alamofire.request(.POST, u, parameters: p).responseJSON { (request, response, result) -> Void in
+                            if result.isSuccess{
+                                //handle success
+                                EVSendLater.sharedManager.removeFromSaves(u, params: p)
+                                EVSendLater.sharedManager.synchronizeSaves()
+                                
                             }
-                            EVSendLater.sharedManager.synchronizeSaves()
-                        })
+                        }
                     }
                 }
             }
         }
-//        EVSendLater.sharedManager.synchronizeSaves()
-//        let url = "http://httpbin.org/post"
-//        if let params = EVSendLater.sharedManager.getSavesForUrl(url, delete:true){
+//        if let params = EVSendLater.sharedManager.getSavesForUrl(url){
 //            for p in params{
-//                sendNowOrLater(url, params: p, completion: { (success) -> Void in
-//                    if success{
-//                        self.saves  = EVSendLater.sharedManager.getSavesForUrl(url, delete:false)
-//                        self.table.reloadData()
+//                Alamofire.request(.POST, url, parameters: p).responseJSON { (request, response, result) -> Void in
+//                    if result.isSuccess{
+//                        //handle success
+//                        EVSendLater.sharedManager.removeFromSaves(url, params: p)
 //                        EVSendLater.sharedManager.synchronizeSaves()
 //                    }
-//                })
+//                    
+//                }
 //            }
 //        }
     }
     
     @IBAction func sendAction(sender: UIButton) {
-        sendNowOrLater("http://httpbin.org/post", params: ["string":inputField.text!, "date":NSDate().timeIntervalSince1970]) { (success) -> Void in
-            
+        let url = "http://httpbin.org/post"
+        if let params = ["string":inputField.text!, "date":NSDate().timeIntervalSince1970] as [String:AnyObject]!{
+            Alamofire.request(.POST, url, parameters: params).responseJSON { (request, response, result) -> Void in
+                if result.isFailure{
+                    EVSendLater.sharedManager.saveForLater(url, params: params)
+                    EVSendLater.sharedManager.synchronizeSaves()
+                }
+            }
         }
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
